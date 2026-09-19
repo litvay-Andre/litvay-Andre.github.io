@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Gestão de Estoque — André Litvay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- O CSS e o HTML estão na mesma pasta (raiz) -->
+<link rel="stylesheet" href="style.css">
+
+<style>
+  /* Estilos específicos para deixar a leitura do projeto agradável */
+  .project-header { padding: 4rem 0 2rem; border-bottom: 1px solid var(--border); }
+  .project-content { max-width: 800px; margin: 3rem auto 6rem; font-size: 1.05rem; }
+  .project-content h2 { margin-top: 3rem; margin-bottom: 1rem; color: var(--text-heading); font-size: 1.8rem; }
+  .project-content h3 { margin-top: 2rem; color: var(--text-heading); font-size: 1.3rem; }
+  .project-content p { margin-bottom: 1.5rem; line-height: 1.7; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; }
+  .tag { font-family: var(--font-mono); font-size: 0.8rem; padding: 0.4rem 0.8rem; background: rgba(34, 211, 184, 0.1); border: 1px solid var(--accent); border-radius: 0.25rem; color: var(--accent); }
+
+  figure { margin: 3rem 0; text-align: center; background: var(--bg-surface); padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); }
+  figure img { max-width: 100%; height: auto; border-radius: 0.25rem; }
+  figcaption { color: var(--text-faint); font-size: 0.9rem; margin-top: 1rem; font-family: var(--font-mono); }
+
+  .highlight-box { background: var(--bg-surface); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .highlight-box ul { margin-left: 1.5rem; margin-top: 1rem; color: var(--text); }
+  .highlight-box li { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">andré<span>.</span>litvay</div>
+    <nav class="top">
+      <a href="index.html">← Voltar ao Portfólio</a>
+    </nav>
+  </div>
+</header>
+
+<!-- CABEÇALHO DO PROJETO -->
+<section class="project-header">
+  <div class="wrap">
+    <a href="index.html" class="btn ghost" style="margin-bottom: 2rem; padding: 0.5rem 1rem;">← Voltar</a>
+    <div class="eyebrow">Automação de Processos · EV/Híbridos · Cobel</div>
+    <h1 style="font-size: 3rem; max-width: 900px;">Sistema de Gestão de Estoque</h1>
+    <p class="role" style="font-size: 1.1rem; max-width: 700px;">Sistema web próprio, integrado ao ERP da concessionária, criado para eliminar o controle manual do pátio e dar rastreabilidade em tempo real aos veículos em estoque.</p>
+
+    <div class="tags">
+      <span class="tag">Google Apps Script</span>
+      <span class="tag">Google Sheets</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">ERP</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEÚDO DO PROJETO -->
+<section class="wrap">
+  <div class="project-content">
+
+    <h2>O Desafio: Controle de Pátio Disperso e Manual</h2>
+    <p>Na Cobel (Omoda &amp; Jaecoo), o controle dos veículos em estoque — chegada, preparação e pendências antes da entrega — dependia de cadastro manual e informações espalhadas entre planilhas soltas e anotações em papel. Isso gerava erros de digitação, retrabalho e falta de visibilidade em tempo real sobre o que já estava pronto para entrega e o que ainda faltava.</p>
+    <p>Identifiquei esse gargalo no dia a dia da oficina e me propus a resolvê-lo criando uma ferramenta própria, sem depender de um sistema comercial fechado.</p>
+
+    <figure>
+      <img src="img/estoque-dashboard.jpg" alt="Tela principal do sistema de gestão de estoque">
+      <figcaption>Tela principal: lista de veículos em estoque com status em tempo real.</figcaption>
+    </figure>
+
+    <h2>A Proposta: Sistema Web Integrado ao ERP</h2>
+    <p>Desenvolvi uma aplicação web (HTML, CSS e JavaScript) integrada ao <strong>Google Sheets</strong> como banco de dados, usando autenticação via Service Account/JWT, com o <strong>Google Drive</strong> armazenando as fotos de cada veículo. Uma rotina de sincronização compara os veículos importados do relatório do ERP pelo número de chassi, evitando sobrescrever histórico e fotos já cadastrados.</p>
+
+    <div class="highlight-box">
+      <h3 style="margin-top: 0;">Principais funcionalidades:</h3>
+      <ul>
+        <li>Cadastro automatizado de veículos a partir do relatório do ERP, comparando por chassi.</li>
+        <li>Gestão de fotos por veículo, com visualizador em lightbox.</li>
+        <li>Lista de pendências de pré-entrega por carro (acessórios, PDI, martelinho de ouro, entre outros).</li>
+        <li>Modo de leitura e permissões diferentes por marca (Omoda/Jaecoo, Jetour, Equipe Técnica).</li>
+        <li>Fallback em localStorage, atualização automática e notificações (toasts) de status.</li>
+      </ul>
+    </div>
+
+    <figure>
+      <img src="img/estoque-fotos.jpg" alt="Gestão de fotos por veículo com visualizador em lightbox">
+      <figcaption>Gestão de fotos por veículo, com visualizador em lightbox.</figcaption>
+    </figure>
+
+    <h2>Arquitetura: Multi-marca e Controle de Acesso</h2>
+    <p>Com o tempo, o sistema passou a cobrir três equipes/marcas da concessionária (Omoda/Jaecoo, Jetour e Equipe Técnica), cada uma com seu próprio tema visual e permissões de edição — implementado com controle de acesso baseado em cargo (RBAC). O login identifica o cargo do usuário e o frontend troca cores, logo e permissões dinamicamente conforme a marca.</p>
+    <p>O backend roda inteiramente sobre Google Apps Script, com abas dedicadas para veículos, histórico, pendências e importação do ERP — mantendo a solução simples de manter, sem custo de infraestrutura adicional.</p>
+
+    <figure>
+      <img src="img/estoque-temas.jpg" alt="Interface com temas visuais diferentes por marca">
+      <figcaption>Troca de tema e permissões conforme a marca/equipe do usuário logado.</figcaption>
+    </figure>
+
+    <h2>Resultados e Impacto</h2>
+    <p>O sistema eliminou boa parte dos erros manuais de cadastro e passou a dar rastreabilidade em tempo real ao pátio, algo que antes dependia de planilhas soltas e verificação física. Hoje é usado no dia a dia pela equipe técnica para acompanhar o status de preparação de cada veículo antes da entrega ao cliente.</p>
+    <p>Mais do que a automação em si, o projeto reforça algo que considero central na minha atuação: identificar gargalos reais da operação e resolvê-los com ferramentas próprias, unindo a rotina de oficina ao raciocínio de automação de processos.</p>
+
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 André Oliver Litvay · Sorocaba, SP</p>
+    <div class="links">
+      <a href="mailto:andrelitvay@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/andre-litvay-5b7b67356" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/litvay-Andre" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
